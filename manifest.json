@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "name": "Chrome API Test",
+  "description": "Tests Chrome API for browser extensions.",
+  "default_locale": "en",
+  "icons": { "128": "icons/icon128.png" },
+  "background" : {
+    "scripts" : ["src/bg/background.js"]
+  },
+  "browser_action": {
+    "default_title": "",
+    "default_icon": "icons/icon19.png"
+  },
+  "commands": {},
+  "permissions": [
+      "tabs",
+      "contextMenus",
+      "cookies",
+      "http://*/*", "https://*/*"
+  ]
+}
