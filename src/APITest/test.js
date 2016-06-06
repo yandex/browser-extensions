@@ -11,18 +11,21 @@ const TestSetResult = {
     FAIL: 2,
 };
 
+const TestAsync = true;
+
 class Test {
-    constructor(promise_fn, type, async) {
+    constructor(fn, type, async) {
         if (async === undefined) async = false;
         if (async) {
-            this.fn = promise_fn;
+            this.fn = fn;
         } else {
             this.fn = function () {
                 return new Promise((resolve, reject) => {
-                    if (promise_fn()) {
-                        resolve();
+                    let status = fn();
+                    if (status === '') {
+                        resolve(status);
                     } else {
-                        reject();
+                        reject(status);
                     }
                 });
             };
@@ -33,13 +36,13 @@ class Test {
 
     run() {
         return new Promise((resolve, reject) => {
-            this.fn().then(() => {
-                    resolve(TestSetResult.PASS);
-                }, () => {
+            this.fn().then(status => {
+                    resolve([TestSetResult.PASS, status]);
+                }, status => {
                     if (this.type == TestType.SUGGEST) {
-                        resolve(TestSetResult.PARTIALLY);
+                        resolve([TestSetResult.PARTIALLY, status]);
                     } else {
-                        resolve(TestSetResult.FAIL);
+                        resolve([TestSetResult.FAIL, status]);
                     }
                 }
             );
@@ -114,11 +117,11 @@ class APITest {
                     let title_color = ["#5cb85c", "#f0ad4e", "#d9534f"];
                     let test_results = ["[Success]", "[Partially]", "[Failed]"];
 
-                    html += "<div style='width: 100%; max-width: 720px;'>";
+                    html += "<div style='width: 100%;'>";
                     for (let test_set of res) {
                         html += "<div style='padding-left: 10px; margin-bottom: 30px'>";
                         let test_set_status = Math.max.apply(null,
-                            [...function* () { for (let i of test_set[1]) yield i[1] }()]
+                            [...function* () { for (let i of test_set[1]) yield i[1][0] }()]
                         );
                         html += "<div class='test-set' style='min-height: 40px; line-height: 40px; font-size: 14pt; " +
                             "min-width: 240px; padding-left: 10px; " +
@@ -130,12 +133,13 @@ class APITest {
                         html += "<div %s style='border: gray 2px solid; border-bottom-width: 1px; margin-top: -2px'>"
                             .replace('%s', test_set_status == TestSetResult.PASS ? "hidden" : "");
                         for (let test of test_set[1]) {
-                            html += "<div style='padding-left: 10px; height: 32px; line-height: 32px; font-size: 12pt; " +
-                                "background-color: %s; color: %s'>%s: %s</div>"
-                                    .replace('%s', bg_color[test[1]])
-                                    .replace('%s', text_color[test[1]])
+                            html += "<div style='padding-left: 10px; min-height: 32px; line-height: 32px; font-size: 12pt; " +
+                                "background-color: %s; color: %s'>%s: %s %s</div>"
+                                    .replace('%s', bg_color[test[1][0]])
+                                    .replace('%s', text_color[test[1][0]])
                                     .replace('%s', test[0])
-                                    .replace('%s', test[1] == TestSetResult.PASS ? "OK" : "Fail");
+                                    .replace('%s', test[1][0] == TestSetResult.PASS ? "OK" : "Fail")
+                                    .replace('%s', test[1][1] === '' ? '' : '[' + test[1][1] + ']');
                             html += "<div style='height: 1px; background-color: gray'></div>";
                         }
                         html += "</div></div>";

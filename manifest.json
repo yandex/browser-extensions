@@ -17,6 +17,8 @@
       "tabs",
       "contextMenus",
       "cookies",
-      "http://*/*", "https://*/*"
+      "http://*/*", "https://*/*",
+      "idle",
+      "notifications"
   ]
 }
