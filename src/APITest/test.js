@@ -8,7 +8,7 @@ const TestType = {
 const TestSetResult = {
     PASS: 0,
     PARTIALLY: 1,
-    FAIL: 2,
+    FAIL: 2
 };
 
 const TestAsync = true;
@@ -21,11 +21,11 @@ class Test {
         } else {
             this.fn = function () {
                 return new Promise((resolve, reject) => {
-                    let status = fn();
-                    if (status === '') {
-                        resolve(status);
+                    let msg = fn();
+                    if (msg === '') {
+                        resolve(msg);
                     } else {
-                        reject(status);
+                        reject(msg);
                     }
                 });
             };
@@ -36,13 +36,22 @@ class Test {
 
     run() {
         return new Promise((resolve, reject) => {
-            this.fn().then(status => {
-                    resolve([TestSetResult.PASS, status]);
-                }, status => {
+            this.fn().then(msg => {
+                    resolve({
+                        status: TestSetResult.PASS,
+                        msg: msg
+                    });
+                }, msg => {
                     if (this.type == TestType.SUGGEST) {
-                        resolve([TestSetResult.PARTIALLY, status]);
+                        resolve({
+                            status: TestSetResult.PARTIALLY,
+                            msg: msg
+                        });
                     } else {
-                        resolve([TestSetResult.FAIL, status]);
+                        resolve({
+                            status: TestSetResult.FAIL,
+                            msg: msg
+                        });
                     }
                 }
             );
@@ -53,6 +62,7 @@ class Test {
 class TestSet {
     constructor() {
         this.tests = [];
+        this.manual_tests = [];
     }
 
     suggest(name, fn, async) {
@@ -65,18 +75,29 @@ class TestSet {
         return this;
     }
 
+    manual(id, text) {
+        this.manual_tests[id] = text;
+        return this;
+    }
+
     runAll() {
-        return Promise.all([...function* (tests) {
-            for (let key in tests) {
-                if (tests.hasOwnProperty(key)){
-                    yield new Promise(resolve => {
-                        tests[key].run().then(res => {
-                            resolve([key, res]);
+        return {
+            auto_tests: Promise.all([...function* (tests) {
+                for (let key in tests) {
+                    if (tests.hasOwnProperty(key)){
+                        yield new Promise(resolve => {
+                            tests[key].run().then(res => {
+                                resolve({
+                                    name: key,
+                                    result: res
+                                });
+                            });
                         });
-                    });
+                    }
                 }
-            }
-        }(this.tests)]);
+            }(this.tests)]),
+            manual_tests: this.manual_tests
+        }
     }
 }
 
@@ -96,8 +117,13 @@ class APITest {
             for (let key in sets) {
                 if (sets.hasOwnProperty(key)) {
                     yield new Promise(resolve => {
-                        sets[key].runAll().then(res => {
-                            resolve([key, res]);
+                        let tmp = sets[key].runAll();
+                        tmp.auto_tests.then(res => {
+                            resolve({
+                                title: key,
+                                auto_tests: res,
+                                manual_tests: tmp.manual_tests
+                            });
                         });
                     });
                 }
@@ -120,29 +146,52 @@ class APITest {
                     html += "<div style='width: 100%;'>";
                     for (let test_set of res) {
                         html += "<div style='padding-left: 10px; margin-bottom: 30px'>";
-                        let test_set_status = Math.max.apply(null,
-                            [...function* () { for (let i of test_set[1]) yield i[1][0] }()]
-                        );
+                        let test_set_status = [...function* () {
+                            for (let i of test_set.auto_tests) {
+                                yield i.result.status;
+                            }
+                        }()].reduce((prev, next) => Math.max(prev, next));
+
                         html += "<div class='test-set' style='min-height: 40px; line-height: 40px; font-size: 14pt; " +
                             "min-width: 240px; padding-left: 10px; " +
                             "border: gray 2px solid; background-color: %s'>%s: %s</div>"
                                 .replace('%s', title_color[test_set_status])
-                                .replace('%s', test_set[0])
+                                .replace('%s', test_set.title)
                                 .replace('%s', test_results[test_set_status]);
 
                         html += "<div %s style='border: gray 2px solid; border-bottom-width: 1px; margin-top: -2px'>"
                             .replace('%s', test_set_status == TestSetResult.PASS ? "hidden" : "");
-                        for (let test of test_set[1]) {
+                        for (let test of test_set.auto_tests) {
                             html += "<div style='padding-left: 10px; min-height: 32px; line-height: 32px; font-size: 12pt; " +
                                 "background-color: %s; color: %s'>%s: %s %s</div>"
-                                    .replace('%s', bg_color[test[1][0]])
-                                    .replace('%s', text_color[test[1][0]])
-                                    .replace('%s', test[0])
-                                    .replace('%s', test[1][0] == TestSetResult.PASS ? "OK" : "Fail")
-                                    .replace('%s', test[1][1] === '' ? '' : '[' + test[1][1] + ']');
+                                    .replace('%s', bg_color[test.result.status])
+                                    .replace('%s', text_color[test.result.status])
+                                    .replace('%s', test.name)
+                                    .replace('%s', test.result.status == TestSetResult.PASS ? "OK" : "Fail")
+                                    .replace('%s', test.result.msg === '' ? '' : '[' + test.result.msg + ']');
                             html += "<div style='height: 1px; background-color: gray'></div>";
                         }
-                        html += "</div></div>";
+                        html += "</div>";
+
+                        if (Object.keys(test_set.manual_tests).length) {
+                            html += "<div class='test-set' style='min-height: 40px; line-height: 40px; font-size: 14pt; " +
+                                "min-width: 240px; padding-left: 10px; margin-top: -2px; " +
+                                "border: gray 2px solid; background-color: #337ab7'>Manual Inspection Checklist</div>"
+
+                            html += "<div style='border: gray 2px solid; border-bottom-width: 1px; margin-top: -2px'>"
+                            for (let test in test_set.manual_tests) {
+                                if (test_set.manual_tests.hasOwnProperty(test)) {
+                                    html += `<div id='${test}' style='padding-left: 10px; min-height: 32px;` +
+                                            "line-height: 32px; font-size: 12pt;" +
+                                            "background-color: #d9edf7; color: #333'>" +
+                                            `${test_set.manual_tests[test] + ": Not done yet"}</div>`
+                                    html += "<div style='height: 1px; background-color: gray'></div>";
+                                }
+                            }
+                            html += "</div>";
+                        }
+
+                        html += "</div>";
                     }
                     html += "</div>";
 

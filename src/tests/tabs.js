@@ -64,7 +64,7 @@ var tabs_test = new TestSet()
     .require("[Create and Remove Tabs]", () => {
         return new Promise((resolve, reject) => {
             try {
-                const TabsNum = 7;
+                const TabsNum = 1;
                 let cnt = TabsNum;
 
                 new Promise(resolve_2 => {
@@ -78,7 +78,6 @@ var tabs_test = new TestSet()
                     chrome.windows.getAll({populate: true}, windows => {
                         windows.reduce((chain_0, window_) => {
                             return chain_0.then(() => new Promise(resolve_0 => {
-                                console.log(window_.tabs);
                                 window_.tabs.reduce((chain_1, tab) => {
                                     return chain_1.then(() => new Promise(resolve_1 => {
                                         if (tab.url == "http://chrome_tabs_test/") {
