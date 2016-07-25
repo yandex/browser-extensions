@@ -81,21 +81,24 @@ class TestSet {
     }
 
     runAll() {
+        let tests = this.tests;
         return {
-            auto_tests: Promise.all([...function* (tests) {
+            auto_tests: [...function* () {
                 for (let key in tests) {
                     if (tests.hasOwnProperty(key)){
-                        yield new Promise(resolve => {
-                            tests[key].run().then(res => {
-                                resolve({
-                                    name: key,
-                                    result: res
-                                });
-                            });
-                        });
+                        yield key;
                     }
                 }
-            }(this.tests)]),
+            }()].reduce((prev, curr) => {
+                return prev.then(results => new Promise(resolve => {
+                    tests[curr].run().then(res => {
+                        resolve(results.concat([{
+                            name: curr,
+                            result: res
+                        }]));
+                    });
+                }))
+            }, Promise.resolve([{}])),
             manual_tests: this.manual_tests
         }
     }
@@ -113,22 +116,26 @@ class APITest {
     }
 
     runAll() {
-        this.res = Promise.all([...function* (sets) {
+        let sets = this.sets;
+
+        this.res = [...function* () {
             for (let key in sets) {
                 if (sets.hasOwnProperty(key)) {
-                    yield new Promise(resolve => {
-                        let tmp = sets[key].runAll();
-                        tmp.auto_tests.then(res => {
-                            resolve({
-                                title: key,
-                                auto_tests: res,
-                                manual_tests: tmp.manual_tests
-                            });
-                        });
-                    });
+                    yield key
                 }
             }
-        }(this.sets)]);
+        }()].reduce((prev, curr) => {
+            return prev.then(results => new Promise(resolve => {
+                let tmp = sets[curr].runAll();
+                tmp.auto_tests.then(res => {
+                    resolve(results.concat([{
+                        title: curr,
+                        auto_tests: res.slice(1),
+                        manual_tests: tmp.manual_tests
+                    }]));
+                });
+            }))
+        }, Promise.resolve([{}]));
 
         return this.res;
     }
@@ -144,7 +151,7 @@ class APITest {
                     let test_results = ["[Success]", "[Partially]", "[Failed]"];
 
                     html += "<div style='width: 100%;'>";
-                    for (let test_set of res) {
+                    for (let test_set of res.slice(1)) {
                         html += "<div style='padding-left: 10px; margin-bottom: 30px'>";
                         let test_set_status = [...function* () {
                             for (let i of test_set.auto_tests) {
@@ -162,8 +169,8 @@ class APITest {
                         html += "<div %s style='border: gray 2px solid; border-bottom-width: 1px; margin-top: -2px'>"
                             .replace('%s', test_set_status == TestSetResult.PASS ? "hidden" : "");
                         for (let test of test_set.auto_tests) {
-                            html += "<div style='padding-left: 10px; min-height: 32px; line-height: 32px; font-size: 12pt; " +
-                                "background-color: %s; color: %s'>%s: %s %s</div>"
+                            html += "<div style='padding-left: 10px; min-height: 32px; line-height: 32px; " +
+                                    "font-size: 12pt; background-color: %s; color: %s'>%s: %s %s</div>"
                                     .replace('%s', bg_color[test.result.status])
                                     .replace('%s', text_color[test.result.status])
                                     .replace('%s', test.name)
@@ -174,9 +181,9 @@ class APITest {
                         html += "</div>";
 
                         if (Object.keys(test_set.manual_tests).length) {
-                            html += "<div class='test-set' style='min-height: 40px; line-height: 40px; font-size: 14pt; " +
-                                "min-width: 240px; padding-left: 10px; margin-top: -2px; " +
-                                "border: gray 2px solid; background-color: #337ab7'>Manual Checklist</div>"
+                            html += "<div class='test-set' style='min-height: 40px; line-height: 40px; " +
+                                    "font-size: 14pt; min-width: 240px; padding-left: 10px; margin-top: -2px; " +
+                                    "border: gray 2px solid; background-color: #337ab7'>Manual Checklist</div>"
 
                             html += "<div style='border: gray 2px solid; border-bottom-width: 1px; margin-top: -2px'>"
                             for (let test in test_set.manual_tests) {
