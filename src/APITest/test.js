@@ -176,7 +176,7 @@ class APITest {
                         if (Object.keys(test_set.manual_tests).length) {
                             html += "<div class='test-set' style='min-height: 40px; line-height: 40px; font-size: 14pt; " +
                                 "min-width: 240px; padding-left: 10px; margin-top: -2px; " +
-                                "border: gray 2px solid; background-color: #337ab7'>Manual Inspection Checklist</div>"
+                                "border: gray 2px solid; background-color: #337ab7'>Manual Checklist</div>"
 
                             html += "<div style='border: gray 2px solid; border-bottom-width: 1px; margin-top: -2px'>"
                             for (let test in test_set.manual_tests) {

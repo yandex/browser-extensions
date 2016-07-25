@@ -22,6 +22,7 @@
       "cookies",
       "http://*/*", "https://*/*",
       "idle",
-      "notifications"
+      "notifications",
+      "bookmarks"
   ]
 }

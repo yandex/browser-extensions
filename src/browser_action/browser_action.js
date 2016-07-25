@@ -5,10 +5,11 @@ $(function () {
 
     let test = new APITest();
 
-    test.addTestSet("Tabs", tabs_test);
-    test.addTestSet("Cookies", cookies_test);
-    test.addTestSet("browserAction", browser_action_test);
-    test.addTestSet("contextMenus", context_menus_test);
+    test.addTestSet("Tabs", tabs_test)
+        .addTestSet("Cookies", cookies_test)
+        .addTestSet("browserAction", browser_action_test)
+        .addTestSet("contextMenus", context_menus_test)
+        .addTestSet("bookmarks", bookmarks_test);
 
     let test_tab_id;
 
