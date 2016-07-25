@@ -9,7 +9,8 @@ $(function () {
         .addTestSet("Cookies", cookies_test)
         .addTestSet("browserAction", browser_action_test)
         .addTestSet("contextMenus", context_menus_test)
-        .addTestSet("bookmarks", bookmarks_test);
+        .addTestSet("bookmarks", bookmarks_test)
+        .addTestSet("browsingData", browsing_data_test);
 
     let test_tab_id;
 
