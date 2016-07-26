@@ -38,7 +38,7 @@ for (let suf of ("Appcache Cache Cookies Downloads FileSystems FormData History 
     }), TestAsync);
 }
 
-browsing_data_test.require("[Check remove history] {this test assume that chrome.history works correctly}",
+browsing_data_test.require("[Check remove history] {this test assumes that chrome.history works correctly}",
     () => new Promise((resolve, reject) => {
             let since = (new Date()).getTime();
             chrome.tabs.create({

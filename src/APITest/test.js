@@ -209,7 +209,6 @@ class APITest {
                     resolve($html);
                 });
             });
-
         }
     }
 }
