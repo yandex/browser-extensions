@@ -19,12 +19,18 @@ function methodCall(obj, method, ...args) {
 
 function doneManualTest(id) {
     let $t = $('#' + id);
-    $t.html($t.html().replace("Not done yet", "OK").replace("Failed", "OK"));
+    $t.html($t.html()
+        .replace("Not done yet", "OK")
+        .replace(new RegExp("Failed.*"), "OK"));
     $t.css('background-color', "#dff0d8");
 }
 
-function failManualTest(id) {
+function failManualTest(id, reason) {
     let $t = $('#' + id);
-    $t.html($t.html().replace("Not done yet", "Failed").replace("OK", "Failed"));
+    reason = (reason ? ` (${reason})` : "");
+
+    $t.html($t.html()
+        .replace("Not done yet", "Failed" + reason)
+        .replace("OK", "Failed" + reason));
     $t.css('background-color', "#f2dede");
 }

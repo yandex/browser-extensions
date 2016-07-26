@@ -12,7 +12,8 @@ $(function () {
         .addTestSet("Bookmarks", bookmarks_test)
         .addTestSet("History", history_test)
         .addTestSet("Browsing Data", browsing_data_test)
-        .addTestSet("Downloads", downloads_test);
+        .addTestSet("Downloads", downloads_test)
+        .addTestSet("Idle", idle_test);
 
     let test_tab_id;
 
@@ -53,6 +54,38 @@ $(function () {
             });
 
             /* /history */
+
+            /* idle */
+
+            $(() => {
+                $('#check-idle-button').click(() => {
+                    let min_allowed_time_in_seconds = 15;
+                    setTimeout(() => {
+                        chrome.idle.queryState(min_allowed_time_in_seconds, state => {
+                            if (state == 'idle') {
+                                doneManualTest('check-idle');
+                            } else {
+                                failManualTest('check-idle', "Expected state: idle, actual state: " + state);
+                            }
+                        });
+                    }, (min_allowed_time_in_seconds + 2) * 1000);
+                });
+
+                $('#check-lock-button').click(() => {
+                    let test_time_in_seconds = 20;
+                    setTimeout(() => {
+                        chrome.idle.queryState(10000, state => {
+                            if (state == 'locked') {
+                                doneManualTest('check-lock');
+                            } else {
+                                failManualTest('check-lock', "Expected state: locked, actual state: " + state);
+                            }
+                        });
+                    }, test_time_in_seconds * 1000);
+                });
+            });
+
+            /* /idle */
         });
     });
 });

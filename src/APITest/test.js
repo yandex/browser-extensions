@@ -197,6 +197,7 @@ class APITest {
                                                     .addClass('manual-test-item')
                                                     .attr('id', test)
                                                     .html(test_set.manual_tests[test] + ": Not done yet");
+                                                yield $('<div>').addClass('line');
                                             }
                                         }
                                     }()]);

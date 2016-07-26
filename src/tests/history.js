@@ -23,9 +23,7 @@ var history_test = new TestSet()
 
     .require("[Method Exists] deleteAll", methodExists(chrome.history, 'deleteAll'))
     .manual("history-delete-all", "Delete all the history (careful!) " +
-            "<button id='history-delete-all_button' " +
-            "style='font-size: 12pt; background-color: #c52222; outline: none; " +
-            "color: white; border: 1px grey solid; cursor: pointer'>Delete</button>")
+            "<button id='history-delete-all_button'>Delete</button>")
 
     .require("[Add-Search-Delete]", () => {
         return new Promise((resolve, reject) => {

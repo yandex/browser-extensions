@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.0.8",
+  "version": "0.0.9",
   "name": "Chrome API Test",
   "description": "Tests Chrome API for browser extensions.",
   "default_locale": "en",
@@ -26,6 +26,7 @@
       "bookmarks",
       "browsingData",
       "history",
-      "downloads"
+      "downloads",
+      "idle"
   ]
 }

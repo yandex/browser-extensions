@@ -28,7 +28,7 @@ var downloads_test = new TestSet()
     .require("[Method Call] show", methodCall(chrome.downloads, 'show', 0))
 
     .require("[Method Exists] showDefaultFolder", methodExists(chrome.downloads, 'showDefaultFolder'))
-    .require("[Method Call] showDefaultFolder", methodCall(chrome.downloads, 'showDefaultFolder'))
+    // .require("[Method Call] showDefaultFolder", methodCall(chrome.downloads, 'showDefaultFolder'))
 
     .require("[Method Exists] erase", methodExists(chrome.downloads, 'erase'))
     .require("[Method Call] erase", methodCall(chrome.downloads, 'erase', {query: [""], limit: 1}, () => {}))

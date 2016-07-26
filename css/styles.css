@@ -69,3 +69,19 @@ body {
     background-color: gray
 }
 
+#history-delete-all-button {
+    font-size: 12pt;
+    background-color: #c52222;
+    color: white;
+    border: 1px grey solid;
+    cursor: pointer;
+}
+
+#check-idle-button, #check-lock-button {
+    font-size: 12pt;
+    background-color: #2323c4;
+    color: white;
+    border: 1px grey solid;
+    cursor: pointer;
+}
+
