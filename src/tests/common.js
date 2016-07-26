@@ -18,7 +18,13 @@ function methodCall(obj, method, ...args) {
 }
 
 function doneManualTest(id) {
-    let $t = document.querySelector('#' + id);
-    $t.innerHTML = $t.innerHTML.replace("Not done yet", "OK");
-    $t.style.backgroundColor = "#dff0d8";
+    let $t = $('#' + id);
+    $t.html($t.html().replace("Not done yet", "OK").replace("Failed", "OK"));
+    $t.css('background-color', "#dff0d8");
+}
+
+function failManualTest(id) {
+    let $t = $('#' + id);
+    $t.html($t.html().replace("Not done yet", "Failed").replace("OK", "Failed"));
+    $t.css('background-color', "#f2dede");
 }
