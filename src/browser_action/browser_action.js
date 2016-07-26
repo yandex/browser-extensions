@@ -23,7 +23,7 @@ $(function () {
     }).then(() => {
         test.runAll();
         test.htmlReport().then(res => $body.append(res)).then(() => {
-            let $t = $(".test-set");
+            let $t = $(".auto-test-set-title, .manual-test-set-title");
 
             $t.css('cursor', 'pointer').click(function() {
                 $(this).next().toggle('hidden');
@@ -31,7 +31,7 @@ $(function () {
 
             /* tabs */
 
-            chrome.tabs.update(test_tab_id, {active: true})
+            chrome.tabs.update(test_tab_id, {active: true});
 
             /* /tabs */
 

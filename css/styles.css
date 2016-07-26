@@ -1,0 +1,71 @@
+body {
+    background-color: #f2f2f2;
+}
+
+.title {
+    padding: 0 10px 0 10px;
+    margin-bottom: 20px;
+}
+
+.report-container {
+    width: 100%;
+}
+
+.test-set-container {
+    padding: 0 10px 0 10px;
+    margin-bottom: 30px;
+}
+
+.auto-test-set-title {
+    min-height: 40px;
+    min-width: 240px;
+    padding-left: 10px;
+    line-height: 40px;
+    font-size: 14pt;
+    border: #808080 2px solid;
+}
+
+.manual-test-set-title {
+    min-height: 40px;
+    line-height: 40px;
+    font-size: 14pt;
+    min-width: 240px;
+    padding-left: 10px;
+    margin-top: -2px;
+    border: gray 2px solid;
+    background-color: #337ab7;
+}
+
+.auto-tests-list {
+    border: gray 2px solid;
+    border-bottom-width: 1px;
+    margin-top: -2px;
+}
+
+.manual-tests-list {
+    border: gray 2px solid;
+    border-bottom-width: 1px;
+    margin-top: -2px
+}
+
+.auto-test-item {
+    padding-left: 10px;
+    min-height: 32px;
+    line-height: 32px;
+    font-size: 12pt;
+}
+
+.manual-test-item {
+    padding-left: 10px;
+    min-height: 32px;
+    line-height: 32px;
+    font-size: 12pt;
+    background-color: #d9edf7;
+    color: #333;
+}
+
+.line {
+    height: 1px;
+    background-color: gray
+}
+

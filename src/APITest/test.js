@@ -141,68 +141,71 @@ class APITest {
     }
 
     htmlReport() {
+        let bg_color = ["#dff0d8", "#fcf8e3", "#f2dede"];
+        let text_color = ["#3c763d", "#8a6d3b", "#a94442"];
+        let title_color = ["#5cb85c", "#f0ad4e", "#d9534f"];
+        let test_results = ["[Success]", "[Partially]", "[Failed]"];
+
         if (this.res) {
             return new Promise(resolve => {
                 this.res.then(res => {
-                    let html = "";
-                    let bg_color = ["#dff0d8", "#fcf8e3", "#f2dede"];
-                    let text_color = ["#3c763d", "#8a6d3b", "#a94442"];
-                    let title_color = ["#5cb85c", "#f0ad4e", "#d9534f"];
-                    let test_results = ["[Success]", "[Partially]", "[Failed]"];
+                    let $html = $('<div>').addClass('report-container').append([...function* () {
+                        for (let test_set of res.slice(1)) {
+                            yield $('<div>').addClass('test-set-container').append([...function* () {
+                                let test_set_status = [...function* () {
+                                    for (let i of test_set.auto_tests) {
+                                        yield i.result.status;
+                                    }
+                                }()].reduce((prev, next) => Math.max(prev, next));
 
-                    html += "<div style='width: 100%;'>";
-                    for (let test_set of res.slice(1)) {
-                        html += "<div style='padding-left: 10px; margin-bottom: 30px'>";
-                        let test_set_status = [...function* () {
-                            for (let i of test_set.auto_tests) {
-                                yield i.result.status;
-                            }
-                        }()].reduce((prev, next) => Math.max(prev, next));
+                                yield $('<div>')
+                                    .addClass('auto-test-set-title')
+                                    .css('background-color', title_color[test_set_status])
+                                    .text(`${test_set.title}: ${test_results[test_set_status]}`);
 
-                        html += "<div class='test-set' style='min-height: 40px; line-height: 40px; font-size: 14pt; " +
-                            "min-width: 240px; padding-left: 10px; " +
-                            "border: gray 2px solid; background-color: %s'>%s: %s</div>"
-                                .replace('%s', title_color[test_set_status])
-                                .replace('%s', test_set.title)
-                                .replace('%s', test_results[test_set_status]);
-
-                        html += "<div %s style='border: gray 2px solid; border-bottom-width: 1px; margin-top: -2px'>"
-                            .replace('%s', test_set_status == TestSetResult.PASS ? "hidden" : "");
-                        for (let test of test_set.auto_tests) {
-                            html += "<div style='padding-left: 10px; min-height: 32px; line-height: 32px; " +
-                                    "font-size: 12pt; background-color: %s; color: %s'>%s: %s %s</div>"
-                                    .replace('%s', bg_color[test.result.status])
-                                    .replace('%s', text_color[test.result.status])
-                                    .replace('%s', test.name)
-                                    .replace('%s', test.result.status == TestSetResult.PASS ? "OK" : "Fail")
-                                    .replace('%s', test.result.msg === '' ? '' : '[' + test.result.msg + ']');
-                            html += "<div style='height: 1px; background-color: gray'></div>";
-                        }
-                        html += "</div>";
-
-                        if (Object.keys(test_set.manual_tests).length) {
-                            html += "<div class='test-set' style='min-height: 40px; line-height: 40px; " +
-                                    "font-size: 14pt; min-width: 240px; padding-left: 10px; margin-top: -2px; " +
-                                    "border: gray 2px solid; background-color: #337ab7'>Manual Checklist</div>"
-
-                            html += "<div style='border: gray 2px solid; border-bottom-width: 1px; margin-top: -2px'>"
-                            for (let test in test_set.manual_tests) {
-                                if (test_set.manual_tests.hasOwnProperty(test)) {
-                                    html += `<div id='${test}' style='padding-left: 10px; min-height: 32px;` +
-                                            "line-height: 32px; font-size: 12pt;" +
-                                            "background-color: #d9edf7; color: #333'>" +
-                                            `${test_set.manual_tests[test] + ": Not done yet"}</div>`
-                                    html += "<div style='height: 1px; background-color: gray'></div>";
+                                let $tests_list = $('<div>').addClass('auto-tests-list');
+                                if (test_set_status == TestSetResult.PASS) {
+                                    $tests_list.hide();
                                 }
-                            }
-                            html += "</div>";
+
+                                yield $tests_list.append([...function* () {
+                                    for (let test of test_set.auto_tests) {
+                                        let status = test.result.status == TestSetResult.PASS ? "OK" : "Fail";
+                                        let msg = test.result.msg === '' ? '' : '[' + test.result.msg + ']';
+
+                                        yield $('<div>')
+                                            .addClass('auto-test-item')
+                                            .css({
+                                                'background-color': bg_color[test.result.status],
+                                                'color': text_color[test.result.status],
+                                            })
+                                            .text(`${test.name}: ${status} ${msg}`)
+
+                                        yield $('<div>').addClass('line');
+                                    }
+                                }()]);
+
+                                if (Object.keys(test_set.manual_tests).length) {
+                                    yield $('<div>')
+                                        .addClass('manual-test-set-title')
+                                        .text("Manual Checklist");
+
+                                    yield $('<div>').addClass('manual-tests-list').append([...function* () {
+                                        for (let test in test_set.manual_tests) {
+                                            if (test_set.manual_tests.hasOwnProperty(test)) {
+                                                yield $('<div>')
+                                                    .addClass('manual-test-item')
+                                                    .attr('id', test)
+                                                    .html(test_set.manual_tests[test] + ": Not done yet");
+                                            }
+                                        }
+                                    }()]);
+                                }
+                            }()]);
                         }
+                    }()]);
 
-                        html += "</div>";
-                    }
-                    html += "</div>";
-
-                    resolve(html);
+                    resolve($html);
                 });
             });
 
