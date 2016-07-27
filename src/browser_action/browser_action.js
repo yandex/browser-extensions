@@ -6,14 +6,15 @@ $(function () {
     let test = new APITest();
 
     test.addTestSet("Tabs", tabs_test)
-        .addTestSet("Cookies", cookies_test)
-        .addTestSet("Browser Action", browser_action_test)
-        .addTestSet("Context Menus", context_menus_test)
-        .addTestSet("Bookmarks", bookmarks_test)
-        .addTestSet("History", history_test)
-        .addTestSet("Browsing Data", browsing_data_test)
-        .addTestSet("Downloads", downloads_test)
-        .addTestSet("Idle", idle_test);
+        // .addTestSet("Cookies", cookies_test)
+        // .addTestSet("Browser Action", browser_action_test)
+        // .addTestSet("Context Menus", context_menus_test)
+        // .addTestSet("Bookmarks", bookmarks_test)
+        // .addTestSet("History", history_test)
+        // .addTestSet("Browsing Data", browsing_data_test)
+        // .addTestSet("Downloads", downloads_test)
+        // .addTestSet("Idle", idle_test)
+        .addTestSet("Notifications", notifications_test);
 
     let test_tab_id;
 
