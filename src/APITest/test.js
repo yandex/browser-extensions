@@ -75,8 +75,8 @@ class TestSet {
         return this;
     }
 
-    manual(id, text) {
-        this.manual_tests[id] = text;
+    manual(id, html) {
+        this.manual_tests[id] = html;
         return this;
     }
 
@@ -117,6 +117,7 @@ class APITest {
 
     runAll() {
         let sets = this.sets;
+        let idx = 1, len = Object.keys(sets).length;
 
         this.res = [...function* () {
             for (let key in sets) {
@@ -128,6 +129,13 @@ class APITest {
             return prev.then(results => new Promise(resolve => {
                 let tmp = sets[curr].runAll();
                 tmp.auto_tests.then(res => {
+                    if (idx == len) {
+                        $('#status').detach();
+                    } else {
+                        $('#status').text(`Running... ${idx}/${len}`);
+                        idx++;
+                    }
+
                     resolve(results.concat([{
                         title: curr,
                         auto_tests: res.slice(1),
