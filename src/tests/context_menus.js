@@ -67,4 +67,6 @@ var context_menus_test = new TestSet()
         });
     }, TestAsync)
 
-    .manual('context_menu_click', "Long tap on <a href='#context_test'>[this link]</a> and click on extension in context menu");
+    .manual('context_menu_click', "Long tap on" +
+            " <a href='#context_test'>[this link]</a> " +
+            "and click on extension in context menu");

@@ -46,4 +46,18 @@ var history_test = new TestSet()
                 });
             })
         });
-    }, TestAsync);
+    }, TestAsync)
+
+    .report_ready(() => {
+        $('#history-delete-all_button').click(() => {
+            chrome.history.deleteAll(() => {
+                chrome.history.search({text: ''}, arr => {
+                    if (arr.length == 0) {
+                        doneManualTest('history-delete-all');
+                    } else {
+                        failManualTest('history-delete-all');
+                    }
+                })
+            });
+        });
+    });

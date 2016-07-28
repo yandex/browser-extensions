@@ -63,6 +63,7 @@ class TestSet {
     constructor() {
         this.tests = [];
         this.manual_tests = [];
+        this.fns = [];
     }
 
     suggest(name, fn, async) {
@@ -77,6 +78,11 @@ class TestSet {
 
     manual(id, html) {
         this.manual_tests[id] = html;
+        return this;
+    }
+
+    report_ready(fn) {
+        this.fns.push(fn);
         return this;
     }
 
@@ -108,6 +114,7 @@ class APITest {
     constructor() {
         this.sets = [];
         this.res = undefined;
+        this.fns = [];
     }
 
     addTestSet(name, test_set) {
@@ -127,6 +134,7 @@ class APITest {
             }
         }()].reduce((prev, curr) => {
             return prev.then(results => new Promise(resolve => {
+                this.fns = this.fns.concat(sets[curr].fns);
                 let tmp = sets[curr].runAll();
                 tmp.auto_tests.then(res => {
                     if (idx == len) {

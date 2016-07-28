@@ -126,4 +126,10 @@ var tabs_test = new TestSet()
                 reject("Exception: " + e);
             }
         });
-    }, TestAsync);
+    }, TestAsync)
+
+    .report_ready(() => {
+        chrome.tabs.getCurrent(tab => {
+            chrome.tabs.update(tab.id, {active: true});
+        });
+    });
