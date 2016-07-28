@@ -15,7 +15,8 @@ $(function () {
         .addTestSet("Downloads", downloads_test)
         .addTestSet("Idle", idle_test)
         .addTestSet("Notifications", notifications_test)
-        .addTestSet("Top Sites", top_sites_test);
+        .addTestSet("Top Sites", top_sites_test)
+        .addTestSet("Sessions", sessions_test);
 
     let test_tab_id;
 

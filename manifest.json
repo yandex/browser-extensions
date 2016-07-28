@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.0.11",
+  "version": "0.0.12",
   "name": "Chrome API Test",
   "description": "Tests Chrome API for browser extensions.",
   "default_locale": "en",
@@ -29,6 +29,7 @@
       "downloads",
       "idle",
       "notifications",
-      "topSites"
+      "topSites",
+      "sessions"
   ]
 }
