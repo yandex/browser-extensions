@@ -21,7 +21,7 @@ var idle_test = new TestSet()
         })
     }, TestAsync)
 
-    .manual('check-idle', "[Check idle state] click on Start button, stay still until end of the test (aprox. 15sec)" +
+    .manual('check-idle', "[Check idle state] click on Start button, stay still until end of the test (approx. 15sec)" +
             " <button id='check-idle-button'>Start</button> ")
     .manual('check-lock', "[Check lock state] click on Start button, lock your device, return after 20sec" +
             " <button id='check-lock-button'>Start</button> ")

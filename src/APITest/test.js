@@ -195,7 +195,7 @@ class APITest {
                                                 'background-color': bg_color[test.result.status],
                                                 'color': text_color[test.result.status],
                                             })
-                                            .text(`${test.name}: ${status} ${msg}`)
+                                            .text(`${test.name}: ${status} ${msg}`);
 
                                         yield $('<div>').addClass('line');
                                     }

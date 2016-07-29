@@ -24,7 +24,7 @@ $(() => {
         let $t = $(".auto-test-set-title, .manual-test-set-title");
 
         $t.css('cursor', 'pointer').click(function() {
-            $(this).next().toggle('hidden');
+            $(this).next().toggle('fast');
         });
 
         test.fns.reduce((prev, curr) => {
