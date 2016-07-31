@@ -46,7 +46,7 @@ var history_test = new TestSet()
                 });
             })
         });
-    }, TestAsync)
+    }, { async: true })
 
     .report_ready(() => {
         $('#history-delete-all_button').click(() => {

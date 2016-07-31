@@ -14,7 +14,7 @@ var context_menus_test = new TestSet()
                }
             });
         })
-    }, TestAsync)
+    }, { async: true })
 
     .require("[Method Exists] update", methodExists(chrome.contextMenus, 'update'))
     .require("[Method Call] update", methodCall(chrome.contextMenus, 'update', 1, {}, () => {}))
@@ -65,7 +65,7 @@ var context_menus_test = new TestSet()
                 resolve('');
             });
         });
-    }, TestAsync)
+    }, { async: true })
 
     .manual('context_menu_click', "Long tap on" +
             " <a href='#context_test'>[this link]</a> " +

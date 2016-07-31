@@ -35,7 +35,7 @@ for (let suf of ("Appcache Cache Cookies Downloads FileSystems FormData History 
         }, () => {
             resolve('');
         });
-    }), TestAsync);
+    }), { async: true });
 }
 
 browsing_data_test.require("[Check remove history] {this test assumes that chrome.history works correctly}",
@@ -67,4 +67,4 @@ browsing_data_test.require("[Check remove history] {this test assumes that chrom
                 });
             });
         }
-    ), TestAsync);
+    ), { async: true });

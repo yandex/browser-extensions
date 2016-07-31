@@ -19,7 +19,7 @@ var idle_test = new TestSet()
                 }
             })
         })
-    }, TestAsync)
+    }, { async: true })
 
     .manual('check-idle', "[Check idle state] click on Start button, stay still until end of the test (approx. 15sec)" +
             " <button id='check-idle-button'>Start</button> ")

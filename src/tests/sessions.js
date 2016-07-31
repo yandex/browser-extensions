@@ -65,4 +65,4 @@ var sessions_test = new TestSet()
                 });
             })
         });
-    }, TestAsync);
+    }, { async: true });

@@ -72,4 +72,4 @@ var downloads_test = new TestSet()
                 });
             });
         });
-    }, TestAsync);
+    }, { async: true });

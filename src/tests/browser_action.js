@@ -19,7 +19,7 @@ var browser_action_test = new TestSet()
                 }
             })
         });
-    }, TestAsync)
+    }, { async: true })
 
     .require("[Method Exists] setIcon", methodExists(chrome.browserAction, 'setIcon'))
     .require("[Method Call] setIcon", methodCall(chrome.browserAction, 'setIcon', {path: ""}, () => {}))
@@ -37,4 +37,4 @@ var browser_action_test = new TestSet()
                 }
             })
         });
-    }, TestAsync);
+    }, { async: true });

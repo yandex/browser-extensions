@@ -11,12 +11,23 @@ const TestSetResult = {
     FAIL: 2
 };
 
-const TestAsync = true;
+const default_params = {
+    async: false,
+    hideOnSuccess: false
+}
 
 class Test {
-    constructor(fn, type, async) {
-        if (async === undefined) async = false;
-        if (async) {
+    constructor(fn, type, params) {
+        this.params = JSON.parse(JSON.stringify(default_params));
+        if (params !== undefined) {
+            for (let key in params) {
+                if (params.hasOwnProperty(key)) {
+                    this.params[key] = params[key];
+                }
+            }
+        }
+
+        if (this.params.async) {
             this.fn = fn;
         } else {
             this.fn = function () {
@@ -35,22 +46,26 @@ class Test {
     }
 
     run() {
+        let self = this;
         return new Promise((resolve, reject) => {
             this.fn().then(msg => {
                     resolve({
                         status: TestSetResult.PASS,
-                        msg: msg
+                        msg: msg,
+                        hideOnSuccess: self.params.hideOnSuccess
                     });
                 }, msg => {
                     if (this.type == TestType.SUGGEST) {
                         resolve({
                             status: TestSetResult.PARTIALLY,
-                            msg: msg
+                            msg: msg,
+                            hideOnSuccess: self.params.hideOnSuccess
                         });
                     } else {
                         resolve({
                             status: TestSetResult.FAIL,
-                            msg: msg
+                            msg: msg,
+                            hideOnSuccess: self.params.hideOnSuccess
                         });
                     }
                 }
@@ -66,13 +81,13 @@ class TestSet {
         this.fns = [];
     }
 
-    suggest(name, fn, async) {
-        this.tests[name] = new Test(fn, TestType.SUGGEST, async);
+    suggest(name, fn, params) {
+        this.tests[name] = new Test(fn, TestType.SUGGEST, params);
         return this;
     }
 
-    require(name, fn, async) {
-        this.tests[name] = new Test(fn, TestType.REQUIRE, async);
+    require(name, fn, params) {
+        this.tests[name] = new Test(fn, TestType.REQUIRE, params);
         return this;
     }
 
@@ -161,25 +176,26 @@ class APITest {
         let text_color = ["#3c763d", "#8a6d3b", "#a94442"];
         let title_color = ["#5cb85c", "#f0ad4e", "#d9534f"];
         let test_results = ["[Success]", "[Partially]", "[Failed]"];
+        const div = '<div></div>';
 
         if (this.res) {
             return new Promise(resolve => {
                 this.res.then(res => {
-                    let $html = $('<div>').addClass('report-container').append([...function* () {
+                    let $html = $(div).addClass('report-container').append([...function* () {
                         for (let test_set of res.slice(1)) {
-                            yield $('<div>').addClass('test-set-container').append([...function* () {
+                            yield $(div).addClass('test-set-container').append([...function* () {
                                 let test_set_status = [...function* () {
                                     for (let i of test_set.auto_tests) {
                                         yield i.result.status;
                                     }
                                 }()].reduce((prev, next) => Math.max(prev, next));
 
-                                yield $('<div>')
+                                yield $(div)
                                     .addClass('auto-test-set-title')
                                     .css('background-color', title_color[test_set_status])
                                     .text(`${test_set.title}: ${test_results[test_set_status]}`);
 
-                                let $tests_list = $('<div>').addClass('auto-tests-list');
+                                let $tests_list = $(div).addClass('auto-tests-list');
                                 if (test_set_status == TestSetResult.PASS) {
                                     $tests_list.hide();
                                 }
@@ -189,31 +205,33 @@ class APITest {
                                         let status = test.result.status == TestSetResult.PASS ? "OK" : "Fail";
                                         let msg = test.result.msg === '' ? '' : '[' + test.result.msg + ']';
 
-                                        yield $('<div>')
-                                            .addClass('auto-test-item')
-                                            .css({
-                                                'background-color': bg_color[test.result.status],
-                                                'color': text_color[test.result.status],
-                                            })
-                                            .text(`${test.name}: ${status} ${msg}`);
+                                        if (test.result.status != TestSetResult.PASS || !test.result.hideOnSuccess) {
+                                            yield $(div)
+                                                .addClass('auto-test-item')
+                                                .css({
+                                                    'background-color': bg_color[test.result.status],
+                                                    'color': text_color[test.result.status],
+                                                })
+                                                .text(`${test.name}: ${status} ${msg}`);
 
-                                        yield $('<div>').addClass('line');
+                                            yield $(div).addClass('line');
+                                        }
                                     }
                                 }()]);
 
                                 if (Object.keys(test_set.manual_tests).length) {
-                                    yield $('<div>')
+                                    yield $(div)
                                         .addClass('manual-test-set-title')
                                         .text("Manual Checklist");
 
-                                    yield $('<div>').addClass('manual-tests-list').append([...function* () {
+                                    yield $(div).addClass('manual-tests-list').append([...function* () {
                                         for (let test in test_set.manual_tests) {
                                             if (test_set.manual_tests.hasOwnProperty(test)) {
-                                                yield $('<div>')
+                                                yield $(div)
                                                     .addClass('manual-test-item')
                                                     .attr('id', test)
                                                     .html(test_set.manual_tests[test] + ": Not done yet");
-                                                yield $('<div>').addClass('line');
+                                                yield $(div).addClass('line');
                                             }
                                         }
                                     }()]);

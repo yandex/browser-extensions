@@ -19,4 +19,4 @@ var top_sites_test = new TestSet()
                 reject("*yandex* not found in the top sites list")
             })
         });
-    }, TestAsync);
+    }, { async: true });

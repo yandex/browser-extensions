@@ -88,4 +88,4 @@ var bookmarks_test = new TestSet()
                 })
             });
         });
-    }, TestAsync);
+    }, { async: true });

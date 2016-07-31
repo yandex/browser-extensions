@@ -85,6 +85,6 @@ var cookies_test = new TestSet()
                 }
             }
         });
-    }, TestAsync);
+    }, { async: true });
 
 
