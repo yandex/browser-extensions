@@ -23,12 +23,24 @@ var notifications_test = new TestSet()
     .require("[Method Exists] ", methodExists(chrome.notifications, 'getPermissionLevel'))
     .require("[Method Call] ", methodCall(chrome.notifications, 'getPermissionLevel', () => {}))
 
-    // Doesn't work in BB on OSX
-    .suggest("[Test Notification]", methodCall(chrome.notifications, 'create', {
-        type: 'basic',
-        /* Generates: Unchecked runtime.lastError while running
-           notifications.create: Unable to successfully use the provided image. */
-        iconUrl: "/icons/icon80.png",
-        title: "Test",
-        message: "Test"
-    }, () => {}));
+    .manual('notification-test', "[Test Notification] Press Start and then click on appeared notification" +
+                                 " <button id='notification-test-button' class='button-blue'>Start</button>")
+    .report_ready(() => {
+        $('#notification-test-button').click(() => {
+            chrome.notifications.create({
+                type: 'basic',
+                iconUrl: "/icons/icon80.png",
+                title: "Test",
+                message: "Test"
+            }, id => {
+                let listener = function (id_) {
+                    if (id == id_) {
+                        doneManualTest('notification-test');
+                        chrome.notifications.onClicked.removeListener(listener);
+                    }
+                };
+
+                chrome.notifications.onClicked.addListener(listener);
+            });
+        })
+    });

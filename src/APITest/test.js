@@ -16,6 +16,8 @@ const default_params = {
     hideOnSuccess: false
 }
 
+const SINGLE_TEST_TIME_LIMIT = 3000 // ms
+
 class Test {
     constructor(fn, type, params) {
         this.params = JSON.parse(JSON.stringify(default_params));
@@ -48,13 +50,21 @@ class Test {
     run() {
         let self = this;
         return new Promise((resolve, reject) => {
+            let resolved = false, tl_exceeded = false;
+
             this.fn().then(msg => {
+                    if (tl_exceeded) return;
+                    resolved = true;
+
                     resolve({
                         status: TestSetResult.PASS,
                         msg: msg,
                         hideOnSuccess: self.params.hideOnSuccess
                     });
                 }, msg => {
+                    if (tl_exceeded) return;
+                    resolved = true;
+
                     if (this.type == TestType.SUGGEST) {
                         resolve({
                             status: TestSetResult.PARTIALLY,
@@ -70,6 +80,15 @@ class Test {
                     }
                 }
             );
+
+            setTimeout(() => {
+                if (!resolved) {
+                    resolve({
+                        status: TestSetResult.FAIL,
+                        msg: `Time limit for test exceeded: ${SINGLE_TEST_TIME_LIMIT}ms`
+                    });
+                }
+            }, SINGLE_TEST_TIME_LIMIT);
         });
     }
 }
