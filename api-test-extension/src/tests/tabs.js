@@ -30,6 +30,30 @@ var tabs_test = new TestSet()
     .require("[Method Exists] sendMessage", methodExists(chrome.tabs, 'sendMessage'), { hideOnSuccess: true })
     .require("[Method Call] sendMessage", methodCall(chrome.tabs, 'sendMessage', 1, {}, () => {}))
 
+    .require("[Check sendMessage]", () => new Promise((resolve, reject) => {
+        let msg = { data: "msg" };
+        let res = { data: "response" };
+
+        chrome.tabs.create({
+            url: "http://ya.ru/",
+            selected: false
+        }, tab => {
+            chrome.tabs.executeScript(tab.id, {
+                file: "./src/tests/tabs_bg.js"
+            }, () => {
+                chrome.tabs.sendMessage(tab.id, msg, response => {
+                    if (response.data === res.data) {
+                        resolve('');
+                    } else {
+                        reject("Sent and received responses are different")
+                    }
+
+                    chrome.tabs.remove(tab.id);
+                });
+            })
+        });
+    }), { async: true })
+
     .require("[Method Exists] getSelected", methodExists(chrome.tabs, 'getSelected'), { hideOnSuccess: true })
     .require("[Method Call] getSelected", methodCall(chrome.tabs, 'getSelected', () => {}))
 

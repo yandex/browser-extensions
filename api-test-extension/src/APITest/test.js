@@ -14,9 +14,9 @@ const TestSetResult = {
 const default_params = {
     async: false,
     hideOnSuccess: false
-}
+};
 
-const SINGLE_TEST_TIME_LIMIT = 3000 // ms
+const SINGLE_TEST_TIME_LIMIT = 3000; // ms
 
 class Test {
     constructor(fn, type, params) {
