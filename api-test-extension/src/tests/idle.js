@@ -1,12 +1,13 @@
 'use strict';
 
 var idle_test = new TestSet()
-    .require("[Method Exists] idle", methodExists(chrome, 'idle'))
+    .require("[Method Exists] idle", methodExists(chrome, 'idle'), { hideOnSuccess: true })
 
-    .require("[Method Exists] queryState", methodExists(chrome.idle, 'queryState'))
+    .require("[Method Exists] queryState", methodExists(chrome.idle, 'queryState'), { hideOnSuccess: true })
     .require("[Method Call] queryState", methodCall(chrome.idle, 'queryState', 60, () => {}))
 
-    .require("[Method Exists] setDetectionInterval", methodExists(chrome.idle, 'setDetectionInterval'))
+    .require("[Method Exists] setDetectionInterval", methodExists(chrome.idle, 'setDetectionInterval'),
+        { hideOnSuccess: true })
     .require("[Method Call] setDetectionInterval", methodCall(chrome.idle, 'setDetectionInterval', 60))
 
     .require("[Check active state]", () => {

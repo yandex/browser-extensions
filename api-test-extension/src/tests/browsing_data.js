@@ -1,12 +1,12 @@
 'use strict';
 
 var browsing_data_test = new TestSet()
-    .require("[Method Exists] browsingData", methodExists(chrome, 'browsingData'))
+    .require("[Method Exists] browsingData", methodExists(chrome, 'browsingData'), { hideOnSuccess: true })
 
-    .require("[Method Exists] settings", methodExists(chrome.browsingData, 'settings'))
+    .require("[Method Exists] settings", methodExists(chrome.browsingData, 'settings'), { hideOnSuccess: true })
     .require("[Method Call] settings", methodCall(chrome.browsingData, 'settings', () => {}))
 
-    .require("[Method Exists] remove", methodExists(chrome.browsingData, 'remove'))
+    .require("[Method Exists] remove", methodExists(chrome.browsingData, 'remove'), { hideOnSuccess: true })
     .require("[Method Call] remove", methodCall(chrome.browsingData, 'remove', {
         since: (new Date()).getTime()
     }, {
@@ -28,7 +28,8 @@ var browsing_data_test = new TestSet()
 for (let suf of ("Appcache Cache Cookies Downloads FileSystems FormData History " +
 "IndexedDB LocalStorage PluginData Passwords WebSQL").split(" ")) {
     let method = 'remove' + suf;
-    browsing_data_test.require("[Method Exists] " + method, methodExists(chrome.browsingData, method));
+    browsing_data_test.require("[Method Exists] " + method, methodExists(chrome.browsingData, method),
+        { hideOnSuccess: true });
     browsing_data_test.require("[Method Call] " + method, () => new Promise(resolve => {
         chrome.browsingData[method]({
             since: (new Date()).getTime()

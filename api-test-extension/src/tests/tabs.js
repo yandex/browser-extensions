@@ -25,8 +25,7 @@ var tabs_test = new TestSet()
 
     .suggest("[Method Exists] {Deprecated} sendRequest", methodExists(chrome.tabs, 'sendRequest'),
         { hideOnSuccess: true })
-    .suggest("[Method Call] {Deprecated} sendRequest", methodCall(chrome.tabs, 'sendRequest', 1, {}, () => {}),
-        { hideOnSuccess: true })
+    .suggest("[Method Call] {Deprecated} sendRequest", methodCall(chrome.tabs, 'sendRequest', 1, {}, () => {}))
 
     .require("[Method Exists] sendMessage", methodExists(chrome.tabs, 'sendMessage'), { hideOnSuccess: true })
     .require("[Method Call] sendMessage", methodCall(chrome.tabs, 'sendMessage', 1, {}, () => {}))

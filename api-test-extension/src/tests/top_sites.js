@@ -1,9 +1,9 @@
 'use strict';
 
 var top_sites_test = new TestSet()
-    .require("[Method Exists] topSites", methodExists(chrome, 'topSites'))
+    .require("[Method Exists] topSites", methodExists(chrome, 'topSites'), { hideOnSuccess: true })
 
-    .require("[Method Exists] get", methodExists(chrome.topSites, 'get'))
+    .require("[Method Exists] get", methodExists(chrome.topSites, 'get'), { hideOnSuccess: true })
     .require("[Method Call] get", methodCall(chrome.topSites, 'get', () => {}))
 
     .require("[Check Top Sites] find substring \"yandex\" in the top sites list " +

@@ -1,9 +1,9 @@
 'use strict';
 
 var context_menus_test = new TestSet()
-    .require("[Method Exists] contextMenus", methodExists(chrome, 'contextMenus'))
+    .require("[Method Exists] contextMenus", methodExists(chrome, 'contextMenus'), { hideOnSuccess: true })
 
-    .require("[Method Exists] create", methodExists(chrome.contextMenus, 'create'))
+    .require("[Method Exists] create", methodExists(chrome.contextMenus, 'create'), { hideOnSuccess: true })
     .require("[Method Call] create", () => {
         return new Promise((resolve, reject) => {
             chrome.contextMenus.create ({title: "Context Menu Test"}, () => {
@@ -16,13 +16,13 @@ var context_menus_test = new TestSet()
         })
     }, { async: true })
 
-    .require("[Method Exists] update", methodExists(chrome.contextMenus, 'update'))
+    .require("[Method Exists] update", methodExists(chrome.contextMenus, 'update'), { hideOnSuccess: true })
     .require("[Method Call] update", methodCall(chrome.contextMenus, 'update', 1, {}, () => {}))
 
-    .require("[Method Exists] remove", methodExists(chrome.contextMenus, 'remove'))
+    .require("[Method Exists] remove", methodExists(chrome.contextMenus, 'remove'), { hideOnSuccess: true })
     .require("[Method Call] remove", methodCall(chrome.contextMenus, 'remove', 1, () => {}))
 
-    .require("[Method Exists] removeAll", methodExists(chrome.contextMenus, 'removeAll'))
+    .require("[Method Exists] removeAll", methodExists(chrome.contextMenus, 'removeAll'), { hideOnSuccess: true })
     .require("[Method Call] removeAll", methodCall(chrome.contextMenus, 'removeAll', () => {}))
 
     .require("[Create-Update-Remove]", () => {
