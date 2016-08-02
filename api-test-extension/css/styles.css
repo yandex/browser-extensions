@@ -21,14 +21,14 @@ body {
     min-width: 240px;
     padding-left: 10px;
     line-height: 40px;
-    font-size: 14pt;
+    font-size: 1.6em;
     border: #808080 2px solid;
 }
 
 .manual-test-set-title {
     min-height: 40px;
     line-height: 40px;
-    font-size: 14pt;
+    font-size: 1.6em;
     min-width: 240px;
     padding-left: 10px;
     margin-top: -2px;
@@ -52,14 +52,14 @@ body {
     padding-left: 10px;
     min-height: 32px;
     line-height: 32px;
-    font-size: 12pt;
+    font-size: 1.4em;
 }
 
 .manual-test-item {
     padding-left: 10px;
     min-height: 32px;
     line-height: 32px;
-    font-size: 12pt;
+    font-size: 1.4em;
     background-color: #d9edf7;
     color: #333;
 }
@@ -70,7 +70,7 @@ body {
 }
 
 .button-red, #history-delete-all-button {
-    font-size: 12pt;
+    font-size: 1em;
     background-color: #c52222;
     color: white;
     border: 1px grey solid;
@@ -78,7 +78,7 @@ body {
 }
 
 .button-blue, #check-idle-button, #check-lock-button {
-    font-size: 12pt;
+    font-size: 1em;
     background-color: #2323c4;
     color: white;
     border: 1px grey solid;

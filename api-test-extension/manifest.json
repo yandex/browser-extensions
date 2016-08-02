@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "version": "0.0.17",
-  "name": "Chrome API Test",
+  "name": "Browser API Test",
   "description": "Tests Chrome API for browser extensions.",
   "icons": {
     "16": "icons/icon16.png",
