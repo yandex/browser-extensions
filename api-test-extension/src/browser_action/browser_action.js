@@ -17,7 +17,8 @@ $(() => {
         .addTestSet("Notifications", notifications_test)
         .addTestSet("Top Sites", top_sites_test)
         .addTestSet("Sessions", sessions_test)
-        .addTestSet("Web Navigation", web_navigation_test);
+        .addTestSet("Web Navigation", web_navigation_test)
+        .addTestSet("Storage", storage_test);
 
     test.runAll();
     test.htmlReport().then(res => $body.append(res)).then(() => {
