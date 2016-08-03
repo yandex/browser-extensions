@@ -49,37 +49,45 @@ class Test {
 
     run() {
         let self = this;
-        return new Promise((resolve, reject) => {
+        return new Promise(resolve => {
             let resolved = false, tl_exceeded = false;
 
-            this.fn().then(msg => {
-                    if (tl_exceeded) return;
-                    resolved = true;
+            try {
+                this.fn().then(msg => {
+                        if (tl_exceeded) return;
+                        resolved = true;
 
-                    resolve({
-                        status: TestSetResult.PASS,
-                        msg: msg,
-                        hideOnSuccess: self.params.hideOnSuccess
-                    });
-                }, msg => {
-                    if (tl_exceeded) return;
-                    resolved = true;
-
-                    if (this.type == TestType.SUGGEST) {
                         resolve({
-                            status: TestSetResult.PARTIALLY,
+                            status: TestSetResult.PASS,
                             msg: msg,
                             hideOnSuccess: self.params.hideOnSuccess
                         });
-                    } else {
-                        resolve({
-                            status: TestSetResult.FAIL,
-                            msg: msg,
-                            hideOnSuccess: self.params.hideOnSuccess
-                        });
+                    }, msg => {
+                        if (tl_exceeded) return;
+                        resolved = true;
+
+                        if (this.type == TestType.SUGGEST) {
+                            resolve({
+                                status: TestSetResult.PARTIALLY,
+                                msg: msg,
+                                hideOnSuccess: self.params.hideOnSuccess
+                            });
+                        } else {
+                            resolve({
+                                status: TestSetResult.FAIL,
+                                msg: msg,
+                                hideOnSuccess: self.params.hideOnSuccess
+                            });
+                        }
                     }
-                }
-            );
+                );
+            } catch (e) {
+                resolve({
+                    status: TestSetResult.FAIL,
+                    msg: "Exception occurred during test running: " + e,
+                    hideOnSuccess: false
+                })
+            }
 
             setTimeout(() => {
                 if (!resolved) {
