@@ -3,6 +3,11 @@
 - Allow to install non-market APK:  http://www.howtogeek.com/howto/41082/install-non-market-apps-on-your-android-device/
 - Install the APK
 
+## What's new
+2016-08-05
+- Implement chrome.tabs.remove support
+- Implement chomre.tabs events
+
 ## Custom Extension Install In Developer Mode
 
 ### 1. Copy an unzipped folder with an extension source code to your mobile device
