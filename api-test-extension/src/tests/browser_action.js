@@ -1,12 +1,12 @@
 'use strict';
 
 var browser_action_test = new TestSet()
-    .require("[Method Exists] browserAction", methodExists(chrome, 'browserAction'))
+    .require("[Method Exists] browserAction", methodExists(chrome, 'browserAction'), { hideOnSuccess: true })
 
-    .require("[Method Exists] setTitle", methodExists(chrome.browserAction, 'setTitle'))
+    .require("[Method Exists] setTitle", methodExists(chrome.browserAction, 'setTitle'), { hideOnSuccess: true })
     .require("[Method Call] setTitle", methodCall(chrome.browserAction, 'setTitle', {title: "BrowserActionTest"}))
 
-    .require("[Method Exists] getTitle", methodExists(chrome.browserAction, 'getTitle'))
+    .require("[Method Exists] getTitle", methodExists(chrome.browserAction, 'getTitle'), { hideOnSuccess: true })
     .require("[Method Call] getTitle", methodCall(chrome.browserAction, 'getTitle', {}, () => {}))
 
     .require("[Set-Get Title]", () => {
@@ -21,12 +21,12 @@ var browser_action_test = new TestSet()
         });
     }, { async: true })
 
-    .require("[Method Exists] setIcon", methodExists(chrome.browserAction, 'setIcon'))
+    .require("[Method Exists] setIcon", methodExists(chrome.browserAction, 'setIcon'), { hideOnSuccess: true })
     .require("[Method Call] setIcon", methodCall(chrome.browserAction, 'setIcon', {path: ""}, () => {}))
 
-    .require("[Method Exists] setPopup", methodExists(chrome.browserAction, 'setPopup'))
+    .require("[Method Exists] setPopup", methodExists(chrome.browserAction, 'setPopup'), { hideOnSuccess: true })
 
-    .require("[Method Exists] getPopup", methodExists(chrome.browserAction, 'getPopup'))
+    .require("[Method Exists] getPopup", methodExists(chrome.browserAction, 'getPopup'), { hideOnSuccess: true })
     .require("[Method Call] getPopup", () => {
         return new Promise((resolve, reject) => {
             chrome.browserAction.getPopup({}, result => {

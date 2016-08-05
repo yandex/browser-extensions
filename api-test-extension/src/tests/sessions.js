@@ -1,15 +1,15 @@
 'use strict';
 
 var sessions_test = new TestSet()
-    .require("[Method Exists]", methodExists(chrome, 'sessions'))
+    .require("[Method Exists]", methodExists(chrome, 'sessions'), { hideOnSuccess: true })
 
-    .require("[Method Exists] getRecentlyClosed", methodExists(chrome.sessions, 'getRecentlyClosed'))
+    .require("[Method Exists] getRecentlyClosed", methodExists(chrome.sessions, 'getRecentlyClosed'), { hideOnSuccess: true })
     .require("[Method Call] getRecentlyClosed", methodCall(chrome.sessions, 'getRecentlyClosed', () => {}))
 
-    .require("[Method Exists] getDevices", methodExists(chrome.sessions, 'getDevices'))
+    .require("[Method Exists] getDevices", methodExists(chrome.sessions, 'getDevices'), { hideOnSuccess: true })
     .require("[Method Call] getDevices", methodCall(chrome.sessions, 'getDevices', () => {}))
 
-    .require("[Method Exists] restore", methodExists(chrome.sessions, 'restore'))
+    .require("[Method Exists] restore", methodExists(chrome.sessions, 'restore'), { hideOnSuccess: true })
     .require("[Method Call] restore", methodCall(chrome.sessions, 'restore', '', () => {}))
 
     .require("[Create-Close-GetRecent-Restore]", () => {

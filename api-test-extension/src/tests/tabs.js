@@ -25,11 +25,36 @@ var tabs_test = new TestSet()
 
     .suggest("[Method Exists] {Deprecated} sendRequest", methodExists(chrome.tabs, 'sendRequest'),
         { hideOnSuccess: true })
-    .suggest("[Method Call] {Deprecated} sendRequest", methodCall(chrome.tabs, 'sendRequest', 1, {}, () => {}),
-        { hideOnSuccess: true })
+    .suggest("[Method Call] {Deprecated} sendRequest", methodCall(chrome.tabs, 'sendRequest', 1, {}, () => {}))
 
     .require("[Method Exists] sendMessage", methodExists(chrome.tabs, 'sendMessage'), { hideOnSuccess: true })
     .require("[Method Call] sendMessage", methodCall(chrome.tabs, 'sendMessage', 1, {}, () => {}))
+
+    .require("[Method Exists] executeScript", methodExists(chrome.tabs, 'executeScript'))
+
+    .require("[Check sendMessage, executeScript]", () => new Promise((resolve, reject) => {
+        let msg = { data: "msg" };
+        let res = { data: "response" };
+
+        chrome.tabs.create({
+            url: "http://ya.ru/",
+            selected: false
+        }, tab => {
+            chrome.tabs.executeScript(tab.id, {
+                file: "./src/tests/tabs_bg.js"
+            }, () => {
+                chrome.tabs.sendMessage(tab.id, msg, response => {
+                    if (response.data === res.data) {
+                        resolve('');
+                    } else {
+                        reject("Sent and received responses are different")
+                    }
+
+                    chrome.tabs.remove(tab.id);
+                });
+            })
+        });
+    }), { async: true })
 
     .require("[Method Exists] getSelected", methodExists(chrome.tabs, 'getSelected'), { hideOnSuccess: true })
     .require("[Method Call] getSelected", methodCall(chrome.tabs, 'getSelected', () => {}))
@@ -145,6 +170,36 @@ var tabs_test = new TestSet()
         });
     })
 
+    .require("[Method Exists] query", methodExists(chrome.tabs, 'query'), { hideOnSuccess: true })
+    .require("[Method Call] query", methodCall(chrome.tabs, 'query', {}, () => {}))
+
+    .require("[Method Exists] highlight", methodExists(chrome.tabs, 'highlight'), { hideOnSuccess: true })
+    //.require("[Method Call] highlight", methodCall(chrome.tabs, 'highlight', { tabs: [] }, () => {}))
+    .suggest("[Method Call] highlight {causes crash on mobile}", () => "Test disabled") // TODO: Return test after fix
+
+    .require("[Method Exists] move", methodExists(chrome.tabs, 'move'), { hideOnSuccess: true })
+    .require("[Method Call] move", () => new Promise((resolve, reject) => {
+        chrome.tabs.getCurrent(tab => {
+            var res = methodCall(chrome.tabs, 'move', tab.id, { index: -1 }, () => {})();
+
+            if (res == '') {
+                resolve(res);
+            } else {
+                reject(res);
+            }
+        });
+    }), { async: true })
+
+    .require("[Method Exists] reload", methodExists(chrome.tabs, 'reload'), { hideOnSuccess: true })
+    .require("[Method Call] reload", () => new Promise (resolve => {
+        chrome.tabs.create({ url: "http://ya.ru" }, tab => {
+            chrome.tabs.reload(tab.id, () => {
+                resolve('');
+                chrome.tabs.remove(tab.id, () => {});
+            });
+        });
+    }), { async: true })
+
     .require("[Method Exists] update", methodExists(chrome.tabs, 'update'), { hideOnSuccess: true })
     .require("[Method Call] update", () => new Promise((resolve, reject) => {
         chrome.tabs.getCurrent(tab => {
@@ -156,6 +211,43 @@ var tabs_test = new TestSet()
             }
         });
     }), { async: true })
+
+    .require("[Method Exists] detectLanguage", methodExists(chrome.tabs, 'detectLanguage'), { hideOnSuccess: true })
+    .require("[Method Call] detectLanguage", methodCall(chrome.tabs, 'detectLanguage', () => {}))
+
+    .require("[Method Exists] captureVisibleTab", methodExists(chrome.tabs, 'captureVisibleTab'),
+        { hideOnSuccess: true })
+    .require("[Method Call] captureVisibleTab", methodCall(chrome.tabs, 'captureVisibleTab', () => {}))
+
+    .require("[Method Exists] insertCSS", methodExists(chrome.tabs, 'insertCSS'), { hideOnSuccess: true })
+
+    .require("[Method Exists] setZoom", methodExists(chrome.tabs, 'setZoom'), { hideOnSuccess: true })
+    .require("[Method Exists] getZoom", methodExists(chrome.tabs, 'getZoom'), { hideOnSuccess: true })
+
+    .require("[Set-Get Zoom]", () => new Promise((resolve, reject) => {
+        let zoom = 0;
+        chrome.tabs.getZoom(zoom_ => {
+            zoom = zoom_;
+            chrome.tabs.setZoom(2.0, () => {
+                setTimeout(() => {
+                    chrome.tabs.getZoom(zoom_ => {
+                        if (zoom_ == 2.0) {
+                            resolve('');
+                            chrome.tabs.setZoom(zoom, () => {});
+                        } else {
+                            reject("Zoom wasn't set correctly");
+                        }
+                    })
+                }, 500);
+            })
+        });
+    }), { async: true })
+
+    .require("[Method Exists] setZoomSettings", methodExists(chrome.tabs, 'setZoomSettings'), { hideOnSuccess: true })
+    .require("[Method Call] setZoomSettings", methodCall(chrome.tabs, 'setZoomSettings', {}, () => {}))
+
+    .require("[Method Exists] getZoomSettings", methodExists(chrome.tabs, 'getZoomSettings'), { hideOnSuccess: true })
+    .require("[Method Call] getZoomSettings", methodCall(chrome.tabs, 'getZoomSettings', () => {}))
 
     .require("[Event onCreated]", () => {
         return new Promise((resolve, reject) => {

@@ -1,9 +1,9 @@
 'use strict';
 
 var notifications_test = new TestSet()
-    .require("[Method Exists] notifications", methodExists(chrome, 'notifications'))
+    .require("[Method Exists] notifications", methodExists(chrome, 'notifications'), { hideOnSuccess: true })
 
-    .require("[Method Exists] create", methodExists(chrome.notifications, 'create'))
+    .require("[Method Exists] create", methodExists(chrome.notifications, 'create'), { hideOnSuccess: true })
     .require("[Method Call] create", methodCall(chrome.notifications, 'create', {
         type: 'basic',
         title: "",
@@ -11,16 +11,16 @@ var notifications_test = new TestSet()
         message: ""
     }, () => {}))
 
-    .require("[Method Exists] update", methodExists(chrome.notifications, 'update'))
+    .require("[Method Exists] update", methodExists(chrome.notifications, 'update'), { hideOnSuccess: true })
     .require("[Method Call] update", methodCall(chrome.notifications, 'update', "", {}, () => {}))
 
-    .require("[Method Exists] clear", methodExists(chrome.notifications, 'clear'))
+    .require("[Method Exists] clear", methodExists(chrome.notifications, 'clear'), { hideOnSuccess: true })
     .require("[Method Call] clear", methodCall(chrome.notifications, 'clear', "", () => {}))
 
-    .require("[Method Exists] ", methodExists(chrome.notifications, 'getAll'))
+    .require("[Method Exists] ", methodExists(chrome.notifications, 'getAll'), { hideOnSuccess: true })
     .require("[Method Call] ", methodCall(chrome.notifications, 'getAll', () => {}))
 
-    .require("[Method Exists] ", methodExists(chrome.notifications, 'getPermissionLevel'))
+    .require("[Method Exists] ", methodExists(chrome.notifications, 'getPermissionLevel'), { hideOnSuccess: true })
     .require("[Method Call] ", methodCall(chrome.notifications, 'getPermissionLevel', () => {}))
 
     .manual('notification-test', "[Test Notification] Press Start and then click on appeared notification" +

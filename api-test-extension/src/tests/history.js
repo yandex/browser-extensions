@@ -1,27 +1,27 @@
 'use strict';
 
 var history_test = new TestSet()
-    .require("[Method Exists] history", methodExists(chrome, 'history'))
+    .require("[Method Exists] history", methodExists(chrome, 'history'), { hideOnSuccess: true })
 
-    .require("[Method Exists] search", methodExists(chrome.history, 'search'))
+    .require("[Method Exists] search", methodExists(chrome.history, 'search'), { hideOnSuccess: true })
     .require("[Method Call] search", methodCall(chrome.history, 'search', {text: ""}, () => {}))
 
-    .require("[Method Exists] getVisits", methodExists(chrome.history, 'getVisits'))
+    .require("[Method Exists] getVisits", methodExists(chrome.history, 'getVisits'), { hideOnSuccess: true })
     .require("[Method Call] getVisits", methodCall(chrome.history, 'getVisits', {url: "ya.ru"}, () => {}))
 
-    .require("[Method Exists] addUrl", methodExists(chrome.history, 'addUrl'))
+    .require("[Method Exists] addUrl", methodExists(chrome.history, 'addUrl'), { hideOnSuccess: true })
     .require("[Method Call] addUrl", methodCall(chrome.history, 'addUrl', {url: "ya.ru"}, () => {}))
 
-    .require("[Method Exists] deleteUrl", methodExists(chrome.history, 'deleteUrl'))
+    .require("[Method Exists] deleteUrl", methodExists(chrome.history, 'deleteUrl'), { hideOnSuccess: true })
     .require("[Method Call] deleteUrl", methodCall(chrome.history, 'deleteUrl', {url: ""}, () => {}))
 
-    .require("[Method Exists] deleteRange", methodExists(chrome.history, 'deleteRange'))
+    .require("[Method Exists] deleteRange", methodExists(chrome.history, 'deleteRange'), { hideOnSuccess: true })
     .require("[Method Call] deleteRange", methodCall(chrome.history, 'deleteRange', {
         startTime: (new Date()).getTime() - 1,
         endTime: (new Date()).getTime()
     }, () => {}))
 
-    .require("[Method Exists] deleteAll", methodExists(chrome.history, 'deleteAll'))
+    .require("[Method Exists] deleteAll", methodExists(chrome.history, 'deleteAll'), { hideOnSuccess: true })
     .manual("history-delete-all", "Delete all the history (careful!) " +
             "<button id='history-delete-all-button'>Delete</button>")
 

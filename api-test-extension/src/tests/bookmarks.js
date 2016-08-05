@@ -1,40 +1,40 @@
 'use strict';
 
 var bookmarks_test = new TestSet()
-    .require("[Method Exists] bookmarks", methodExists(chrome, 'bookmarks'))
+    .require("[Method Exists] bookmarks", methodExists(chrome, 'bookmarks'), { hideOnSuccess: true })
 
-    .require("[Method Exists] get", methodExists(chrome.bookmarks, 'get'))
+    .require("[Method Exists] get", methodExists(chrome.bookmarks, 'get'), { hideOnSuccess: true })
     .require("[Method Call] get", methodCall(chrome.bookmarks, 'get', "", () => {}))
 
-    .require("[Method Exists] getChildren", methodExists(chrome.bookmarks, 'getChildren'))
+    .require("[Method Exists] getChildren", methodExists(chrome.bookmarks, 'getChildren'), { hideOnSuccess: true })
     .require("[Method Call] getChildren", methodCall(chrome.bookmarks, 'getChildren', "", () => {}))
 
-    .require("[Method Exists] getRecent", methodExists(chrome.bookmarks, 'getRecent'))
+    .require("[Method Exists] getRecent", methodExists(chrome.bookmarks, 'getRecent'), { hideOnSuccess: true })
     .require("[Metohd Call] getRecent", methodCall(chrome.bookmarks, 'getRecent', 1, () => {}))
 
-    .require("[Method Exists] getTree", methodExists(chrome.bookmarks, 'getTree'))
+    .require("[Method Exists] getTree", methodExists(chrome.bookmarks, 'getTree'), { hideOnSuccess: true })
     .require("[Method Call] getTree", methodCall(chrome.bookmarks, 'getTree', () => {}))
 
-    .require("[Method Exists] getSubTree", methodExists(chrome.bookmarks, 'getSubTree'))
+    .require("[Method Exists] getSubTree", methodExists(chrome.bookmarks, 'getSubTree'), { hideOnSuccess: true })
     .require("[Method Call] getSubTree", methodCall(chrome.bookmarks, 'getSubTree', "", () => {}))
 
-    .require("[Method Exists] search", methodExists(chrome.bookmarks, 'search'))
+    .require("[Method Exists] search", methodExists(chrome.bookmarks, 'search'), { hideOnSuccess: true })
     .require("[Method Call] search", methodCall(chrome.bookmarks, 'search', "", () => {}))
 
-    .require("[Method Exists] create", methodExists(chrome.bookmarks, 'create'))
+    .require("[Method Exists] create", methodExists(chrome.bookmarks, 'create'), { hideOnSuccess: true })
     .require("[Method Call] create", methodCall(chrome.bookmarks, 'create', {},
         bookmark => chrome.bookmarks.remove(bookmark.id)))
 
-    .require("[Method Exists] move", methodExists(chrome.bookmarks, 'move'))
+    .require("[Method Exists] move", methodExists(chrome.bookmarks, 'move'), { hideOnSuccess: true })
     .require("[Method Call] move", methodCall(chrome.bookmarks, 'move', "", {}, () => {}))
 
-    .require("[Method Exists] update", methodExists(chrome.bookmarks, 'update'))
+    .require("[Method Exists] update", methodExists(chrome.bookmarks, 'update'), { hideOnSuccess: true })
     .require("[Method Call] update", methodCall(chrome.bookmarks, 'update', "", {}, () => {}))
 
-    .require("[Method Exists] remove", methodExists(chrome.bookmarks, 'remove'))
+    .require("[Method Exists] remove", methodExists(chrome.bookmarks, 'remove'), { hideOnSuccess: true })
     .require("[Method Call] remove", methodCall(chrome.bookmarks, 'remove', "", () => {}))
 
-    .require("[Method Exists] removeTree", methodExists(chrome.bookmarks, 'removeTree'))
+    .require("[Method Exists] removeTree", methodExists(chrome.bookmarks, 'removeTree'), { hideOnSuccess: true })
     .require("[Method Call] removeTree", methodCall(chrome.bookmarks, 'removeTree', "", () => {}))
 
     .require("[Create-Search-Remove]", () => {
