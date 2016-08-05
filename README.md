@@ -1,11 +1,13 @@
-# How to install extensions
-
+# How to install extensionsZZ
+- Download APK to your Android device from "binaries" folder of the repository
+- Allow to install non-market APK:  http://www.howtogeek.com/howto/41082/install-non-market-apps-on-your-android-device/
+- Install the APK
 
 ## Custom Extension Install In Developer Mode
 
 ### 1. Copy an unzipped folder with an extension source code to your mobile device
 
-### 2. Using the Settings/Extensions/Installed Extensions menu open the extension settings page
+### 2. Using the Settings -> Extensions -> Installed Extensions menu open the extension settings page
 <img src="https://github.com/yandex/browser-extensions/blob/master/docs/images/home-screen.png" width="300">
 <img src="https://github.com/yandex/browser-extensions/blob/master/docs/images/home-screen-menu.png" width="300">
 <img src="https://github.com/yandex/browser-extensions/blob/master/docs/images/extensions-settings.png" width="300">
@@ -22,6 +24,6 @@
 
 ## Install From Store
 
-1) Using the "Settings/Extensions/Opera Store" or "Settings/Extensions/Google Chrome Webstore" menu open the store page
+1) Using the "Settings -> Extensions -> Opera Store" or "Settings -> Extensions -> Google Chrome Webstore" menu open the store page
 
 2) Find the extension and add them to browser
