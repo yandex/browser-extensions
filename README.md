@@ -1,4 +1,4 @@
-# How to install extensionsZZ
+# How to install extensions
 - Download the APK to your Android device from the "binaries" folder of the repository (https://github.com/yandex/browser-extensions/blob/master/binaries/yandexbrowser-android.apk)
 - Allow to install non-market APK:  http://www.howtogeek.com/howto/41082/install-non-market-apps-on-your-android-device/
 - Install the APK
