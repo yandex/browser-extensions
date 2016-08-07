@@ -4,7 +4,7 @@
 - Install the APK
 
 ## What's new
-2016-00-07
+2016-08-07
 - add activeTab permission support
 
 2016-08-05
