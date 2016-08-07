@@ -5,6 +5,7 @@
 
 ## What's new
 2016-08-07
+- add tabCapture and desktopCapture permissions support
 - add activeTab permission support
 
 2016-08-05
