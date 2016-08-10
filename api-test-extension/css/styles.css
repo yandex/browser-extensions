@@ -1,5 +1,7 @@
 body {
     background-color: #f2f2f2;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
 }
 
 .title {
@@ -85,3 +87,15 @@ body {
     cursor: pointer;
 }
 
+.title-container {
+    display: inline-block;
+    width: 240px;
+    margin-right: 10px;
+}
+
+.save-report-container {
+    display: inline-block;
+    float: right;
+    margin: 1em 0 1em 0;
+    font-size: 1.4em;
+}

@@ -35,5 +35,22 @@ $(() => {
                 resolve(curr());
             }));
         }, Promise.resolve()).then(() => {});
+
+        $.ajax({ url: "/css/styles.css" }).done((css) => {
+            let $body = $('html').clone();
+
+            $body.find('button').detach();
+            $body.find('#save-report-link').detach();
+            $body.find('script').detach();
+            $('<style>').html(css).appendTo($body.find('head'));
+
+            var blob = new Blob(["<!DOCTYPE html>" + $body.get(0).outerHTML], { type: 'text/html' });
+            let url = URL.createObjectURL(blob);
+
+            $('#save-report-link')
+                .toggle('fast')
+                .attr('href', url)
+                .attr('download', `report-${ new Date().toISOString().slice(0, 19).replace(':', '-') }.html`);
+        });
     });
 });
