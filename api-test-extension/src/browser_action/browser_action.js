@@ -26,7 +26,7 @@ $(() => {
     test.htmlReport().then(res => $body.append(res)).then(() => {
         let $t = $(".auto-test-set-title, .manual-test-set-title");
 
-        $t.css('cursor', 'pointer').click(function() {
+        $t.css('cursor', 'pointer').click(function () {
             $(this).next().toggle('fast');
         });
 
@@ -36,21 +36,26 @@ $(() => {
             }));
         }, Promise.resolve()).then(() => {});
 
-        $.ajax({ url: "/css/styles.css" }).done((css) => {
-            let $body = $('html').clone();
+        $('#save-report-button')
+            .toggle('fast')
+            .click(function () {
+                $.ajax({ url: "/css/styles.css" }).done((css) => {
+                    let $body = $('html').clone();
 
-            $body.find('button').detach();
-            $body.find('#save-report-link').detach();
-            $body.find('script').detach();
-            $('<style>').html(css).appendTo($body.find('head'));
+                    $body.find('button').detach();
+                    $body.find('#save-report-link').detach();
+                    $body.find('script').detach();
+                    $body.find(".auto-test-set-title, .manual-test-set-title").css('cursor', 'auto');
+                    $('<style>').html(css).appendTo($body.find('head'));
 
-            var blob = new Blob(["<!DOCTYPE html>" + $body.get(0).outerHTML], { type: 'text/html' });
-            let url = URL.createObjectURL(blob);
+                    var blob = new Blob(["<!DOCTYPE html>" + $body.get(0).outerHTML], { type: 'text/html' });
+                    let url = URL.createObjectURL(blob);
 
-            $('#save-report-link')
-                .toggle('fast')
-                .attr('href', url)
-                .attr('download', `report-${ new Date().toISOString().slice(0, 19).replace(':', '-') }.html`);
+                    $('#save-report-link')
+                        .attr('href', url)
+                        .attr('download', `report-${ new Date().toISOString().slice(0, 19).replace(':', '-') }.html`)
+                        .get(0).click();
+            });
         });
     });
 });

@@ -87,6 +87,14 @@ body {
     cursor: pointer;
 }
 
+.button-green {
+    font-size: 1em;
+    background-color: #23c223;
+    color: white;
+    border: 1px #006400 solid;
+    cursor: pointer;
+}
+
 .title-container {
     display: inline-block;
     width: 240px;
@@ -96,6 +104,6 @@ body {
 .save-report-container {
     display: inline-block;
     float: right;
-    margin: 1em 0 1em 0;
+    margin: 0.7em 0 0 0;
     font-size: 1.4em;
 }
