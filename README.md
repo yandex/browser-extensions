@@ -4,6 +4,9 @@
 - Install the APK
 
 ## What's new
+2016-08-24 (build 16.7.211760)
+- Fix Issue #1: Action menu doesn't dynamically resize to content.
+
 2016-08-16
 - Add more permissions (for screenshot mostly)
 - Update UI
