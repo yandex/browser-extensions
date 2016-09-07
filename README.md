@@ -1,9 +1,11 @@
 # How to install extensions
-- Download the APK to your Android device from the "binaries" folder of the repository (https://github.com/yandex/browser-extensions/blob/master/binaries/yandexbrowser-android.apk)
-- Allow to install non-market APK:  http://www.howtogeek.com/howto/41082/install-non-market-apps-on-your-android-device/
-- Install the APK
+- Install Yandex Browser Alpha from Google Play (https://play.google.com/store/apps/details?id=com.yandex.browser.alpha)
 
 ## What's new
+2016-09-07 (build 16.9.0.886)
+- We have published Yandex Browser Alpha with extensions support. You can download it from Google Play:
+https://play.google.com/store/apps/details?id=com.yandex.browser.alpha
+
 2016-08-24 (build 16.7.211760)
 - Fix Issue #1: Action menu doesn't dynamically resize to content.
 
