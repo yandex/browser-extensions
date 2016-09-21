@@ -249,6 +249,10 @@ var tabs_test = new TestSet()
     .require("[Method Exists] getZoomSettings", methodExists(chrome.tabs, 'getZoomSettings'), { hideOnSuccess: true })
     .require("[Method Call] getZoomSettings", methodCall(chrome.tabs, 'getZoomSettings', () => {}))
 
+    // Beta
+    .suggest("[Method Exists] discard", methodExists(chrome.tabs, 'discard'), { hideOnSuccess: true })
+    .suggest("[Method Call] discard", methodCall(chrome.tabs, 'discard', () => {}))
+
     .require("[Event onCreated]", () => {
         return new Promise((resolve, reject) => {
             let resolved = false;
