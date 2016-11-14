@@ -1,7 +1,13 @@
 # How to install extensions
-- Install Yandex Browser Alpha from Google Play (https://play.google.com/store/apps/details?id=com.yandex.browser.alpha)
+- Install Yandex Browser from Google Play (https://play.google.com/store/apps/details?id=com.yandex.browser)
 
 ## What's new
+2016-11-14
+- Added tests for alarms API.
+
+2016-11-10
+- Added tests for privacy API.
+
 2016-09-07 (build 16.9.0.886)
 - We have published Yandex Browser Alpha with extensions support. You can download it from Google Play:
 https://play.google.com/store/apps/details?id=com.yandex.browser.alpha
@@ -28,10 +34,8 @@ https://play.google.com/store/apps/details?id=com.yandex.browser.alpha
 
 ### 1. Copy an unzipped folder with an extension source code to your mobile device
 
-### 2. Using the Settings -> Extensions -> Installed Extensions menu open the extension settings page
+### 2. Type browser://extensions/
 <img src="https://github.com/yandex/browser-extensions/blob/master/docs/images/home-screen.png" width="300">
-<img src="https://github.com/yandex/browser-extensions/blob/master/docs/images/home-screen-menu.png" width="300">
-<img src="https://github.com/yandex/browser-extensions/blob/master/docs/images/extensions-settings.png" width="300">
 
 ### 3. Turn on the Developer Mode by checking the box
 <img src="https://github.com/yandex/browser-extensions/blob/master/docs/images/installed-extensions-settings.png" width="300">
