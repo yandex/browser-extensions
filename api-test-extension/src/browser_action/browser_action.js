@@ -21,7 +21,8 @@ $(() => {
         .addTestSet("Storage", storage_test)
         .addTestSet("Web Request", web_request_test)
         .addTestSet("Windows", windows_test)
-        .addTestSet("Privacy", privacy_test);
+        .addTestSet("Privacy", privacy_test)
+        .addTestSet("Alarms", alarms_test);
 
     test.runAll();
     test.htmlReport().then(res => $body.append(res)).then(() => {

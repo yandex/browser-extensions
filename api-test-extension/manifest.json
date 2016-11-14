@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "Browser API Test",
   "description": "Tests Chrome API for browser extensions.",
   "icons": {
@@ -33,6 +33,7 @@
       "webNavigation",
       "storage",
       "webRequest",
-      "privacy"
+      "privacy",
+      "alarms"
   ]
 }
