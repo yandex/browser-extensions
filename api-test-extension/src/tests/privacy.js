@@ -73,6 +73,10 @@ var privacy_test = new TestSet()
         chrome.privacy.services.searchSuggestEnabled.get({}, () => resolve(''));
     }), { async: true })
 
+    .require("[Property Exists] services.spellingServiceEnabled",
+        methodExists(chrome.privacy.services, 'spellingServiceEnabled'), { hideOnSuccess: true })
+    .suggest("[Property Get] services.spellingServiceEnabled {Unsupported on Android}", () => "Test disabled")
+
     .require("[Property Exists] services.translationServiceEnabled",
         methodExists(chrome.privacy.services, 'translationServiceEnabled'), { hideOnSuccess: true })
     .require("[Property Get] services.translationServiceEnabled", () => new Promise((resolve, reject) => {
