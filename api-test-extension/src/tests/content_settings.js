@@ -66,7 +66,7 @@ var content_settings_test = new TestSet()
     .require("[Property Exists] cookies", methodExists(chrome.contentSettings, 'cookies'), { hideOnSuccess: true })
     .require("[Property Set] cookies", methodCall(chrome.contentSettings.cookies, 'set', detailsBlock, () => {}))
 
-    .require("[Property Exists] images", methodExists(chrome.contentSettings, 'images'), { hideOnSuccess: true })
+    .suggest("[Property Exists] images", methodExists(chrome.contentSettings, 'images'), { hideOnSuccess: true })
     .suggest("[Property Set] images {Unsupported on Android}", () => "Test disabled")
 
     .require("[Property Exists] javascript",
@@ -77,7 +77,7 @@ var content_settings_test = new TestSet()
     .require("[Property Exists] location", methodExists(chrome.contentSettings, 'location'), { hideOnSuccess: true })
     .require("[Property Set] location", methodCall(chrome.contentSettings.location, 'set', detailsBlock, () => {}))
 
-    .require("[Property Exists] plugins", methodExists(chrome.contentSettings, 'plugins'), { hideOnSuccess: true })
+    .suggest("[Property Exists] plugins", methodExists(chrome.contentSettings, 'plugins'), { hideOnSuccess: true })
     .suggest("[Property Set] plugins {Unsupported on Android}", () => "Test disabled")
 
     .require("[Property Exists] popups", methodExists(chrome.contentSettings, 'popups'), { hideOnSuccess: true })
@@ -96,7 +96,7 @@ var content_settings_test = new TestSet()
             setting: 'ask'
         }, () => {}))
 
-    .require("[Property Exists] mouselock", methodExists(chrome.contentSettings, 'mouselock'), { hideOnSuccess: true })
+    .suggest("[Property Exists] mouselock", methodExists(chrome.contentSettings, 'mouselock'), { hideOnSuccess: true })
     .suggest("[Property Set] mouselock {Unsupported on Android}", () => "Test disabled")
 
     .require("[Property Exists] microphone",
@@ -107,7 +107,7 @@ var content_settings_test = new TestSet()
     .require("[Property Exists] camera", methodExists(chrome.contentSettings, 'camera'), { hideOnSuccess: true })
     .require("[Property Set] camera", methodCall(chrome.contentSettings.camera, 'set', detailsBlock, () => {}))
 
-    .require("[Property Exists] unsandboxedPlugins",
+    .suggest("[Property Exists] unsandboxedPlugins",
         methodExists(chrome.contentSettings, 'unsandboxedPlugins'), { hideOnSuccess: true })
     .suggest("[Property Set] unsandboxedPlugins {Unsupported on Android}", () => "Test disabled")
 
