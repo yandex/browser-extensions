@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "name": "Browser API Test",
   "description": "Tests Chrome API for browser extensions.",
   "icons": {
@@ -14,6 +14,15 @@
     "default_title": "",
     "default_icon": "icons/icon19.png"
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://ya.ru/",
+        "https://ya.ru/"
+      ],
+      "js": ["src/tests/content_scripts_bg.js"]
+    }
+  ],
   "commands": {},
   "permissions": [
       "tabs",

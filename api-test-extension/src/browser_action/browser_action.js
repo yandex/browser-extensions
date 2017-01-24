@@ -23,7 +23,8 @@ $(() => {
         .addTestSet("Windows", windows_test)
         .addTestSet("Privacy", privacy_test)
         .addTestSet("Alarms", alarms_test)
-        .addTestSet("Content Settings", content_settings_test);
+        .addTestSet("Content Settings", content_settings_test)
+        .addTestSet("Content Scripts", content_scripts);
 
     test.runAll();
     test.htmlReport().then(res => $body.append(res)).then(() => {
