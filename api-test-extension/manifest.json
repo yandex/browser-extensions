@@ -1,18 +1,16 @@
 {
   "manifest_version": 2,
-  "version": "0.1.5",
+  "version": "0.1.7",
   "name": "Browser API Test",
   "description": "Tests Chrome API for browser extensions.",
   "icons": {
     "16": "icons/icon16.png",
     "128": "icons/icon128.png"
   },
-  "background" : {
-    "scripts" : ["src/bg/background.js"]
-  },
   "browser_action": {
     "default_title": "",
-    "default_icon": "icons/icon19.png"
+    "default_icon": "icons/icon19.png",
+    "default_popup": "src/browser_action/bg.html"
   },
   "content_scripts": [
     {

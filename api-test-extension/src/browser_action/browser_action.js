@@ -24,7 +24,8 @@ $(() => {
         .addTestSet("Privacy", privacy_test)
         .addTestSet("Alarms", alarms_test)
         .addTestSet("Content Settings", content_settings_test)
-        .addTestSet("Content Scripts", content_scripts);
+        .addTestSet("Content Scripts", content_scripts)
+        .addTestSet("Popup Scripts", popup_scripts);
 
     test.runAll();
     test.htmlReport().then(res => $body.append(res)).then(() => {
