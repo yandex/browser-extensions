@@ -31,7 +31,7 @@ var browser_action_test = new TestSet()
         return new Promise((resolve, reject) => {
             chrome.browserAction.getPopup({}, result => {
                 if (typeof result === 'string' &&
-                    result.indexOf("src/browser_action/bg.html") != -1) {
+                    result.indexOf("src/browser_action/popup.html") != -1) {
                     resolve('');
                 } else {
                     reject("Popup incorrect");

@@ -1,8 +1,6 @@
 let msg = { data: "msg" };
 let res = { data: "response" };
 
-console.log("OK");
-
 let listener = function (response, sender, sendResponse) {
     if (response.data === msg.data) {
         sendResponse(res);
