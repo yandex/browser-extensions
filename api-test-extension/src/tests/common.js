@@ -26,6 +26,46 @@ function methodCall(obj, method, ...args) {
     };
 }
 
+function eventExists(obj, method) {
+    return () => {
+        if (!obj.hasOwnProperty(method)) {
+            return "Event not found.";
+        }
+
+        if (!obj[method].hasOwnProperty('addListener')
+            && !(typeof obj[method].addListener == 'function')) {
+            return "Event found but addListener doesn't exists.";
+        }
+
+        if (!obj[method].hasOwnProperty('removeListener')
+            && !(typeof obj[method].removeListener == 'function')) {
+            return "Event found but removeListener doesn't exists.";
+        }
+
+        return '';
+    }
+}
+
+function eventUse(obj, method) {
+    return () => {
+        let listener = function () {};
+
+        try {
+            obj[method].addListener(listener);
+        } catch(e) {
+            return "Exception occurred during attempt to add a listener";
+        }
+
+        try {
+            obj[method].removeListener(listener);
+        } catch(e) {
+            return "Exception occurred during attempt to remove a listener";
+        }
+
+        return '';
+    };
+}
+
 function doneManualTest(id) {
     let $t = $('#' + id);
     $t.html($t.html()

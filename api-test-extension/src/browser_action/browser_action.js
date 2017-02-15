@@ -5,7 +5,8 @@ $(() => {
 
     let test = new APITest();
 
-    test.addTestSet("Tabs", tabs_test)
+    test
+        .addTestSet("Tabs", tabs_test)
         .addTestSet("Cookies", cookies_test)
         .addTestSet("Browser Action", browser_action_test)
         .addTestSet("Context Menus", context_menus_test)
@@ -25,7 +26,9 @@ $(() => {
         .addTestSet("Alarms", alarms_test)
         .addTestSet("Content Settings", content_settings_test)
         .addTestSet("Content Scripts", content_scripts)
-        .addTestSet("Popup Scripts", popup_scripts);
+        .addTestSet("Popup Scripts", popup_scripts)
+        .addTestSet("Extension", extension_test)
+    ; // -- test -- //
 
     test.runAll();
     test.htmlReport().then(res => $body.append(res)).then(() => {

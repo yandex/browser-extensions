@@ -20,3 +20,10 @@ let listener = function (response, sender, sendResponse) {
 };
 
 chrome.runtime.onMessage.addListener(listener);
+
+document.addEventListener("DOMContentLoaded", () => {
+    let div = document.createElement("div");
+    div.setAttribute('id', 'bg-div-elem');
+
+    document.querySelector('body').appendChild(div);
+});
